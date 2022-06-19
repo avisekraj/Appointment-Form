@@ -14,31 +14,25 @@ app.get("/", (req, res) => {
   res.send("hello world");
 });
 
-app.post("/appoint", async(req, res) => {
+app.post("/appoint", async (req, res) => {
   const { name, email, phone, date } = req.body;
 
   if (!name || !email || !phone || !date) {
     return res.status(422).json({ error: "please fill the field" });
   }
   try {
-    const userExist=await User.findOne({ email: email });
+    const userExist = await User.findOne({ email: email });
     if (userExist) {
-        return res.status(422).json({ error: "Email already appointed" });
-      }
+      return res.status(422).json({ error: "Email already appointed" });
+    }
 
-      const user = new User({ name, email, phone, date });
+    const user = new User({ name, email, phone, date });
 
-     await user
-      .save();
-      res.status(201).json({ message: "user Appointed sucessfully" });
-
-      
-    } catch (err) {
+    await user.save();
+    res.status(201).json({ message: "user Appointed sucessfully" });
+  } catch (err) {
     console.log(err);
   }
-
-  
-    
 });
 
 app.listen(PORT, () => {

@@ -7,8 +7,7 @@ const App = () => {
     username: "",
     email: "",
     phone: "",
-    date: ""
-    
+    date: "",
   });
 
   const inputs = [
@@ -37,8 +36,7 @@ const App = () => {
       name: "phone",
       type: "number",
       placeholder: "Mobile Number",
-      errorMessage:
-        "Mobile No. should be 10 digit ",
+      errorMessage: "Mobile No. should be 10 digit ",
       label: "Mobile Number",
       pattern: `^[0-9]{10-10}$`,
       required: true,
@@ -50,38 +48,36 @@ const App = () => {
       placeholder: "Select Date",
       label: "Date",
     },
-    
   ];
-
-  
 
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-const PostData=async(e)=>{
-  e.preventDefault();
+  const PostData = async (e) => {
+    e.preventDefault();
 
-  const { name, email, phone, date }=values;
-  const res =await fetch("/appoint",{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json"
-    },
-    body:JSON.stringify({
-      name, email, phone, date
-    })
-  });
-  const data= await res.json();
+    const { name, email, phone, date } = values;
+    const res = await fetch("/appoint", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        phone,
+        date,
+      }),
+    });
+    const data = await res.json();
 
-  if(res.status===422||!data){
-    window.alert("invalid")
-  }else{
-    window.alert("Appointment booked Successfully")
-  }
-}
-
-
+    if (res.status === 422 || !data) {
+      window.alert("invalid");
+    } else {
+      window.alert("Appointment booked Successfully");
+    }
+  };
 
   return (
     <div className="app">
